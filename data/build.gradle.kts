@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.julianvelandia.data"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
@@ -56,5 +56,10 @@ dependencies {
     implementation(libs.moshi.adapters)
     implementation(libs.logging.interceptor)
     implementation(libs.coil.compose)
+
+    //Domain
+    implementation(project(":domain"))
+
+
 
 }
