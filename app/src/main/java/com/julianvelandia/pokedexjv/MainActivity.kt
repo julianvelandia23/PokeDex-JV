@@ -7,14 +7,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.julianvelandia.pokedexjv.ui.theme.PokeDexJVTheme
+import com.julianvelandia.presentation.NavArguments
+import com.julianvelandia.presentation.composable.DetailsScreen
 import com.julianvelandia.presentation.composable.HomeScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,9 +35,20 @@ class MainActivity : ComponentActivity() {
                             HomeScreen(
                                 modifier = Modifier.padding(innerPadding),
                                 navigateTo = { route ->
-                                    navController.navigate(route)
+                                    navController.navigate(Route.getDetailsRoute(route))
                                 }
                             )
+                        }
+
+                        composable(
+                            route = Route.DETAILS,
+                            arguments = listOf(
+                                navArgument(NavArguments.POKEMON_NAME) {
+                                    type = NavType.StringType
+                                }
+                            )
+                        ) {
+                            DetailsScreen(modifier = Modifier.padding(innerPadding))
                         }
                     }
                 }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -41,7 +42,7 @@ fun ItemPokemonHome(item: Pokemon, onClick: () -> Unit) {
         }
 
         Icon(
-            imageVector = Icons.Default.ArrowForward,
+            imageVector = Icons.AutoMirrored.Filled.ArrowForward,
             contentDescription = stringResource(R.string.accessibility_see_details),
             modifier = Modifier.padding(end = dimenXSmall16)
         )

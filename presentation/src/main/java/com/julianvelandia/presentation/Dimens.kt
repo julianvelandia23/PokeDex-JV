@@ -7,3 +7,4 @@ val dimenXSmall16 = 16.dp
 
 // XxxMedium
 val dimenXxxMedium48 = 48.dp
+val dimenXxxMedium64 = 64.dp

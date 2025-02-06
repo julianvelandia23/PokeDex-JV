@@ -28,7 +28,7 @@ fun HomeScreen(
     navigateTo: (String) -> Unit = {}
 ) {
     LaunchedEffect(true) {
-        viewModel.getDogs()
+        viewModel.getListPokemon()
     }
 
     val state by viewModel.homeState.collectAsState()

@@ -30,7 +30,7 @@ class HomeViewModel  @Inject constructor(
     val homeState: StateFlow<HomeState> get() = _homeState
 
 
-    fun getDogs() = viewModelScope.launch {
+    fun getListPokemon() = viewModelScope.launch {
         _homeState.value = _homeState.value.copy(isLoading = true)
         val result = getListPokemon.invoke()
         _homeState.value = if (result.isSuccess) {
