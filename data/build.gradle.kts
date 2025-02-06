@@ -46,7 +46,6 @@ dependencies {
     //hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-    implementation(libs.hilt.navigation.compose)
 
     //HTTP
     implementation(libs.retrofit2)
@@ -55,7 +54,6 @@ dependencies {
     implementation(libs.moshi.kotlin)
     implementation(libs.moshi.adapters)
     implementation(libs.logging.interceptor)
-    implementation(libs.coil.compose)
 
     //Domain
     implementation(project(":domain"))

@@ -16,7 +16,7 @@ class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideDogsRepository(
+    fun provideDexRepository(
         remoteDataStorage: RemoteDataStorage,
     ): PokeDexRepository = PokeDexRepositoryImpl(remoteDataStorage)
 }
