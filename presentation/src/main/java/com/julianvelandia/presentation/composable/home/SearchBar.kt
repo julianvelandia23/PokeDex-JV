@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.julianvelandia.presentation.R
 import com.julianvelandia.presentation.dimenXSmall16
-import com.julianvelandia.presentation.dimenXxxMedium48
 
 @Composable
 fun SearchBar(query: String, onQueryChanged: (String) -> Unit) {
