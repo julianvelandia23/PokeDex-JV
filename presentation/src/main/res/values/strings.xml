@@ -12,4 +12,8 @@
 
     <string name="empty_result">No hay información disponible para este Pokémon.</string>
 
+    <string name="detail_view">Detalles del Pokémon</string>
+
+    <string name="accessibility_back">Volver atras</string>
+
 </resources>

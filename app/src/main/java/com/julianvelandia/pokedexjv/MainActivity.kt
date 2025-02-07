@@ -6,7 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -27,9 +32,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             PokeDexJVTheme {
                 val navController = rememberNavController()
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier.fillMaxSize()
+                ) { innerPadding ->
                     NavHost(
-                        navController = navController, startDestination =  Route.HOME
+                        navController = navController, startDestination = Route.HOME
                     ) {
                         composable(Route.HOME) {
                             HomeScreen(
@@ -48,7 +55,12 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         ) {
-                            DetailsScreen(modifier = Modifier.padding(innerPadding))
+                            DetailsScreen(
+                                modifier = Modifier.padding(innerPadding),
+                                onBack = {
+                                    navController.popBackStack()
+                                }
+                            )
                         }
                     }
                 }
