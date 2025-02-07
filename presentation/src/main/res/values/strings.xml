@@ -7,4 +7,6 @@
     <string name="forms">Forms:</string>
     <string name="value">- %s</string>
 
+    <string name="error">No se pudo cargar la información. Inténtalo de nuevo.</string>
+
 </resources>

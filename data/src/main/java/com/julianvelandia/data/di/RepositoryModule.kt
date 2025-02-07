@@ -1,6 +1,7 @@
 package com.julianvelandia.data.di
 
 import com.julianvelandia.data.PokeDexRepositoryImpl
+import com.julianvelandia.data.local.LocalDataStorage
 import com.julianvelandia.data.remote.RemoteDataStorage
 import com.julianvelandia.domain.PokeDexRepository
 import dagger.Module
@@ -18,5 +19,6 @@ class RepositoryModule {
     @Provides
     fun provideDexRepository(
         remoteDataStorage: RemoteDataStorage,
-    ): PokeDexRepository = PokeDexRepositoryImpl(remoteDataStorage)
+        localDataStorage: LocalDataStorage
+    ): PokeDexRepository = PokeDexRepositoryImpl(remoteDataStorage, localDataStorage)
 }

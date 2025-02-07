@@ -1,7 +1,10 @@
 package com.julianvelandia.domain
 
+import kotlinx.coroutines.flow.Flow
+
 interface PokeDexRepository {
-    suspend fun getListPokemon(): Result<List<Pokemon>>
+    fun getListPokemon(): Flow<Result<List<Pokemon>>>
+
 
     suspend fun getPokemonDetail(name: String): Result<PokemonDetail>
 }
