@@ -1,7 +1,6 @@
 package com.julianvelandia.data
 
 import com.julianvelandia.data.local.LocalDataStorage
-import com.julianvelandia.data.local.detail.DetailPokemonEntity
 import com.julianvelandia.data.local.detail.toDomain
 import com.julianvelandia.data.local.detail.toEntity
 import com.julianvelandia.data.local.home.toDomain

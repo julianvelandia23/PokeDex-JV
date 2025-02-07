@@ -18,7 +18,7 @@ class Converters {
     }
 
     @TypeConverter
-    fun toAbilityList(value: String?): List<AbilityEntity>? {
+    fun toAbilityList(value: String?): List<AbilityEntity> {
         val adapter = moshi.adapter<List<AbilityEntity>>(Types.newParameterizedType(List::class.java, AbilityEntity::class.java))
         return value?.let { adapter.fromJson(it) } ?: emptyList()
     }
@@ -30,7 +30,7 @@ class Converters {
     }
 
     @TypeConverter
-    fun toFormList(value: String?): List<FormEntity>? {
+    fun toFormList(value: String?): List<FormEntity> {
         val adapter = moshi.adapter<List<FormEntity>>(Types.newParameterizedType(List::class.java, FormEntity::class.java))
         return value?.let { adapter.fromJson(it) } ?: emptyList()
     }
@@ -42,7 +42,7 @@ class Converters {
     }
 
     @TypeConverter
-    fun toTypeList(value: String?): List<TypeEntity>? {
+    fun toTypeList(value: String?): List<TypeEntity> {
         val adapter = moshi.adapter<List<TypeEntity>>(Types.newParameterizedType(List::class.java, TypeEntity::class.java))
         return value?.let { adapter.fromJson(it) } ?: emptyList()
     }
