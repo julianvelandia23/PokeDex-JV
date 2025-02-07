@@ -1,14 +1,20 @@
 package com.julianvelandia.data
 
 import com.julianvelandia.data.local.LocalDataStorage
-import com.julianvelandia.data.local.toDomain
-import com.julianvelandia.data.local.toEntity
+import com.julianvelandia.data.local.detail.DetailPokemonEntity
+import com.julianvelandia.data.local.detail.toDomain
+import com.julianvelandia.data.local.detail.toEntity
+import com.julianvelandia.data.local.home.toDomain
+import com.julianvelandia.data.local.home.toEntity
 import com.julianvelandia.data.remote.RemoteDataStorage
 import com.julianvelandia.data.remote.toDomain
 import com.julianvelandia.domain.PokeDexRepository
 import com.julianvelandia.domain.Pokemon
 import com.julianvelandia.domain.PokemonDetail
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 
 class PokeDexRepositoryImpl(
     private val remoteDataStorage: RemoteDataStorage,
@@ -27,7 +33,7 @@ class PokeDexRepositoryImpl(
             },
             updateLocalData = { data ->
                 data.forEach {
-                    localDataStorage.upsert(it.toEntity())
+                    localDataStorage.upsertHome(it.toEntity())
                 }
             }
         )
@@ -42,19 +48,26 @@ class PokeDexRepositoryImpl(
         }
     }
 
-    override suspend fun getPokemonDetail(name: String): Result<PokemonDetail> {
-        return try {
-            val response = remoteDataStorage.getPokemonDetail(name)
-            if (response.isSuccessful) {
-                val result = response.body()?.toDomain()
-                result?.let {
-                    Result.success(it)
-                } ?: Result.failure(Exception("Mapping error: Response body is null"))
-            } else {
-                Result.failure(Exception("Error: ${response.code()} - ${response.message()}"))
+    override fun getPokemonDetail(name: String): Flow<Result<PokemonDetail?>> {
+        return localDataStorage.getPokemonDetail(name)
+            .map { localData ->
+               Result.success(localData?.toDomain())
             }
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
+            .catch { e ->
+                emit(Result.failure(e))
+            }
+            .onStart {
+                runCatching {
+                    val response = remoteDataStorage.getPokemonDetail(name)
+                    if (response.isSuccessful) {
+                        response.body()?.let { dto ->
+                            localDataStorage.upsertDetail(dto.toEntity())
+                        }
+                    }
+                }.onFailure { e ->
+                    emit(Result.failure(e))
+                }
+            }
     }
+
 }

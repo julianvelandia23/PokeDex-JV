@@ -6,6 +6,6 @@ interface PokeDexRepository {
     fun getListPokemon(): Flow<Result<List<Pokemon>>>
     suspend fun searchPokemon(query: String): Result<List<Pokemon>>
 
-    suspend fun getPokemonDetail(name: String): Result<PokemonDetail>
+    fun getPokemonDetail(name: String): Flow<Result<PokemonDetail?>>
 
 }

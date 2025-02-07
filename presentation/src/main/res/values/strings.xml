@@ -10,4 +10,6 @@
     <string name="error">No se pudo cargar la información. Inténtalo de nuevo.</string>
     <string name="placeholder_search">Busca tu Pokémon favorito</string>
 
+    <string name="empty_result">No hay información disponible para este Pokémon.</string>
+
 </resources>

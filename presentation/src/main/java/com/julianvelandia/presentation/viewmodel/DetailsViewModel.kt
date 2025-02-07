@@ -9,48 +9,41 @@ import com.julianvelandia.domain.PokemonDetail
 import com.julianvelandia.presentation.NavArguments
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class DetailState(
     val isLoading: Boolean = true,
+    val isError: Boolean = false,
     val data: PokemonDetail? = null,
-    val errorMessage: String = ""
 )
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
-    private val getDetailPokemon: GetDetailPokemonUseCase,
+    getDetailPokemon: GetDetailPokemonUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val pokemonName: String? = savedStateHandle[NavArguments.POKEMON_NAME]
 
-    private val _detailState = MutableStateFlow(DetailState())
-    val detailState: StateFlow<DetailState> get() = _detailState
-
-    init {
-        pokemonName?.let {
-           getPokemon(it)
+    val detailState: StateFlow<DetailState> = getDetailPokemon(pokemonName.orEmpty())
+        .map { result ->
+            if (result.isSuccess) {
+                DetailState(isLoading = false, data = result.getOrNull())
+            } else {
+                DetailState(isLoading = false, isError = true)
+            }
         }
-    }
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            DetailState()
+        )
 
-
-    private fun getPokemon(name: String) = viewModelScope.launch {
-        _detailState.value = _detailState.value.copy(isLoading = true)
-        val result = getDetailPokemon.invoke(name)
-        _detailState.value = if (result.isSuccess) {
-            _detailState.value.copy(
-                isLoading = false,
-                data = result.getOrNull(),
-                errorMessage = ""
-            )
-        } else {
-            _detailState.value.copy(
-                isLoading = false,
-                errorMessage = result.exceptionOrNull()?.message.orEmpty()
-            )
-        }
-    }
 }

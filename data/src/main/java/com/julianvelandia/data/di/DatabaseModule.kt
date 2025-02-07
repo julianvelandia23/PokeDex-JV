@@ -43,7 +43,10 @@ class DatabaseModule {
     }
 
     @Provides
-    fun providesDogDao(appDatabase: AppDatabase) = appDatabase.homePokemonDao()
+    fun providesHomePokemonDao(appDatabase: AppDatabase) = appDatabase.homePokemonDao()
+
+    @Provides
+    fun providesDetailPokemonDao(appDatabase: AppDatabase) = appDatabase.detailPokemonDao()
 
     companion object {
         private const val NAME_DATABASE = "room_database.db"

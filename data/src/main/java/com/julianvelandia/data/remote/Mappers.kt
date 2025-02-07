@@ -1,5 +1,6 @@
 package com.julianvelandia.data.remote
 
+import com.julianvelandia.data.POKEMON_IMAGE_URL
 import com.julianvelandia.domain.Abilities
 import com.julianvelandia.domain.Ability
 import com.julianvelandia.domain.Forms
@@ -36,5 +37,4 @@ fun TypesDto.toDomain() = Types(
 
 fun TypeDto.toDomain() = Type(name)
 
-private const val POKEMON_IMAGE_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/%s.png"
 
