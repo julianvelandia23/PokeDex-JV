@@ -3,7 +3,6 @@ package com.julianvelandia.data.local
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface HomePokemonDao {
@@ -12,4 +11,7 @@ interface HomePokemonDao {
 
     @Query("SELECT * FROM HomePokemonEntity")
     suspend fun getAll(): List<HomePokemonEntity>
+
+    @Query("SELECT * FROM HomePokemonEntity WHERE name LIKE '%' || :query || '%'")
+    suspend fun searchPokemon(query: String): List<HomePokemonEntity>
 }

@@ -8,5 +8,6 @@
     <string name="value">- %s</string>
 
     <string name="error">No se pudo cargar la información. Inténtalo de nuevo.</string>
+    <string name="placeholder_search">Busca tu Pokémon favorito</string>
 
 </resources>

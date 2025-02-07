@@ -11,4 +11,6 @@ class LocalDataStorage @Inject constructor(
     ) = homePokemonDao.upsert(homePokemonEntity)
 
     suspend fun getAll() = homePokemonDao.getAll()
+
+    suspend fun searchPokemon(query: String) = homePokemonDao.searchPokemon(query)
 }
