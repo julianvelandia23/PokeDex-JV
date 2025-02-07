@@ -1,4 +1,4 @@
-package com.julianvelandia.presentation.composable
+package com.julianvelandia.presentation.composable.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,9 +11,11 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -21,7 +23,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.julianvelandia.presentation.R
 import com.julianvelandia.presentation.dimenXSmall16
-import com.julianvelandia.presentation.dimenXxxMedium48
 import com.julianvelandia.presentation.viewmodel.HomeViewModel
 
 @Composable
@@ -31,7 +32,9 @@ fun HomeScreen(
     navigateTo: (String) -> Unit = {}
 ) {
 
-    val state by viewModel.homeState.collectAsState()
+    val state by viewModel.uiState.collectAsState()
+
+    var searchQuery by rememberSaveable { mutableStateOf("") }
 
     when {
         state.isLoading -> {
@@ -47,16 +50,30 @@ fun HomeScreen(
         }
 
         state.data.isNullOrEmpty().not() -> {
-            LazyColumn(
+            Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(vertical = dimenXxxMedium48, horizontal = dimenXSmall16),
-                verticalArrangement = Arrangement.spacedBy(dimenXSmall16)
+                    .padding(horizontal = dimenXSmall16)
             ) {
-                state.data?.let { items ->
-                    items(items) { item ->
-                        ItemPokemonHome(item) {
-                            navigateTo(item.name)
+                SearchBar(
+                    query = searchQuery,
+                    onQueryChanged = {
+                        searchQuery = it
+                        viewModel.updateSearchQuery(it)
+                    }
+                )
+
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = dimenXSmall16),
+                    verticalArrangement = Arrangement.spacedBy(dimenXSmall16)
+                ) {
+                    state.data?.let { items ->
+                        items(items) { item ->
+                            ItemPokemonHome(item) {
+                                navigateTo(item.name)
+                            }
                         }
                     }
                 }

@@ -6,7 +6,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import java.net.UnknownHostException
 
 
 inline fun <T, R> T.safeCallData(
@@ -31,15 +30,17 @@ inline fun <T, R> T.safeCallData(
                 emit(Result.success(data))
             },
             onFailure = { e ->
-                if (localResult == null) {
+                if (localResult.isEmptyOrNull()) {
                     emit(Result.failure(e))
                 }
             }
         )
     } catch (e: Exception) {
-        if (localResult == null || (localResult is List<*> && localResult.isEmpty())) {
+        if (localResult.isEmptyOrNull()) {
             emit(Result.failure(e))
         }
     }
 }.flowOn(dispatcher)
+
+fun <R1> R1?.isEmptyOrNull() = this == null || (this is List<*> && this.isEmpty())
 

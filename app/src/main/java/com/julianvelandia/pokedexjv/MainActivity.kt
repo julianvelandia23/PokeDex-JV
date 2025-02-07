@@ -15,8 +15,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.julianvelandia.pokedexjv.ui.theme.PokeDexJVTheme
 import com.julianvelandia.presentation.NavArguments
-import com.julianvelandia.presentation.composable.DetailsScreen
-import com.julianvelandia.presentation.composable.HomeScreen
+import com.julianvelandia.presentation.composable.detail.DetailsScreen
+import com.julianvelandia.presentation.composable.home.HomeScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
