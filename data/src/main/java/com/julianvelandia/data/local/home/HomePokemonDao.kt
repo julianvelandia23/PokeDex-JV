@@ -1,4 +1,4 @@
-package com.julianvelandia.data.local
+package com.julianvelandia.data.local.home
 
 import androidx.room.Dao
 import androidx.room.Query
