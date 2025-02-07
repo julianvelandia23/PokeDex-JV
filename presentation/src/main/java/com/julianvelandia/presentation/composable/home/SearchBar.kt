@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.julianvelandia.presentation.R
 import com.julianvelandia.presentation.dimenXSmall16
-import com.julianvelandia.presentation.dimenXxxMedium48
 
 @Composable
 fun SearchBar(query: String, onQueryChanged: (String) -> Unit) {
@@ -25,7 +24,7 @@ fun SearchBar(query: String, onQueryChanged: (String) -> Unit) {
         onValueChange = onQueryChanged,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = dimenXxxMedium48),
+            .padding(top = dimenXSmall16),
         placeholder = { Text(stringResource(R.string.placeholder_search)) },
         singleLine = true,
         shape = RoundedCornerShape(dimenXSmall16),

@@ -16,8 +16,8 @@ import javax.inject.Inject
 
 data class HomeState(
     val isLoading: Boolean = true,
-    val data: List<Pokemon>? = emptyList(),
-    val errorMessage: String = ""
+    val data: List<Pokemon> = emptyList(),
+    val isError: Boolean = false
 )
 
 @HiltViewModel
@@ -38,16 +38,15 @@ class HomeViewModel  @Inject constructor(
                     val data = result.getOrNull()
                     HomeState(
                         isLoading = false,
-                        data = data ?: emptyList(),
-                        errorMessage = ""
+                        data = data.orEmpty(),
+                        isError = false
                     )
                 }
                 result.isFailure -> {
-                    val errorMessage = result.exceptionOrNull()?.message.orEmpty()
                     HomeState(
                         isLoading = false,
                         data = emptyList(),
-                        errorMessage = errorMessage
+                        isError = true
                     )
                 }
                 else -> {
@@ -66,7 +65,7 @@ class HomeViewModel  @Inject constructor(
             state
         } else {
             val filteredData = searchPokemon.invoke(query).getOrDefault(emptyList())
-            state.copy(data = filteredData)
+            state.copy(data = filteredData, isError = false)
         }
     }.stateIn(
         viewModelScope,

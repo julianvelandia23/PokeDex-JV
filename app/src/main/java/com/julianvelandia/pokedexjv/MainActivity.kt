@@ -27,9 +27,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             PokeDexJVTheme {
                 val navController = rememberNavController()
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier.fillMaxSize()
+                ) { innerPadding ->
                     NavHost(
-                        navController = navController, startDestination =  Route.HOME
+                        navController = navController, startDestination = Route.HOME
                     ) {
                         composable(Route.HOME) {
                             HomeScreen(
@@ -48,7 +50,12 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         ) {
-                            DetailsScreen(modifier = Modifier.padding(innerPadding))
+                            DetailsScreen(
+                                modifier = Modifier.padding(innerPadding),
+                                onBack = {
+                                    navController.popBackStack()
+                                }
+                            )
                         }
                     }
                 }

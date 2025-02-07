@@ -7,4 +7,3 @@ class GetSearchPokemonUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(query: String) = repository.searchPokemon(query)
 }
-
