@@ -55,20 +55,20 @@ fun DetailsScreen(
             )
         }
     ) { paddingValues ->
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .verticalScroll(rememberScrollState())
-        ) {
-            when {
-                state.isLoading -> {
-                    LoadingState()
-                }
-                state.isError -> {
-                    EmptyState()
-                }
-                state.data != null -> {
+        when {
+            state.isLoading -> {
+                LoadingState()
+            }
+            state.isError -> {
+                EmptyState()
+            }
+            state.data != null -> {
+                Column(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .padding(paddingValues)
+                        .verticalScroll(rememberScrollState())
+                ) {
                     state.data?.let { pokemonDetail ->
                         DetailState(
                             modifier = Modifier.fillMaxWidth(),
@@ -76,9 +76,9 @@ fun DetailsScreen(
                         )
                     }
                 }
-                else -> {
-                    EmptyState(value = stringResource(R.string.empty_result))
-                }
+            }
+            else -> {
+                EmptyState(value = stringResource(R.string.empty_result))
             }
         }
     }

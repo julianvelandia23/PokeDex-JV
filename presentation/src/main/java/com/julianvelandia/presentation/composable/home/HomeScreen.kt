@@ -3,6 +3,7 @@ package com.julianvelandia.presentation.composable.home
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.julianvelandia.presentation.R
 import com.julianvelandia.presentation.composable.EmptyState
 import com.julianvelandia.presentation.composable.LoadingState
+import com.julianvelandia.presentation.dimenXSmall16
 import com.julianvelandia.presentation.dimenXSmall24
 import com.julianvelandia.presentation.viewmodel.HomeViewModel
 
@@ -41,7 +43,7 @@ fun HomeScreen(
         }
 
         else -> {
-            Column {
+            Column(modifier = modifier) {
                 SearchBar(
                     query = searchQuery,
                     onQueryChanged = {
@@ -51,7 +53,8 @@ fun HomeScreen(
                 )
                 if (state.data.isNotEmpty()) {
                     LazyColumn(
-                        modifier = modifier
+                        modifier = Modifier
+                            .padding(top = dimenXSmall16)
                             .fillMaxSize(),
                         verticalArrangement = Arrangement.spacedBy(dimenXSmall24)
                     ) {
