@@ -16,7 +16,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.julianvelandia.presentation.R
 import com.julianvelandia.presentation.dimenXSmall16
 import com.julianvelandia.presentation.dimenXxxMedium48
 import com.julianvelandia.presentation.viewmodel.HomeViewModel
@@ -27,9 +30,6 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigateTo: (String) -> Unit = {}
 ) {
-    LaunchedEffect(true) {
-        viewModel.getListPokemon()
-    }
 
     val state by viewModel.homeState.collectAsState()
 
@@ -64,10 +64,20 @@ fun HomeScreen(
         }
 
         else -> {
-            Text(
-                modifier = modifier,
-                text = state.errorMessage
-            )
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(dimenXSmall16)
+                    .background(MaterialTheme.colorScheme.background),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = stringResource(R.string.error),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
+            }
         }
     }
 }
