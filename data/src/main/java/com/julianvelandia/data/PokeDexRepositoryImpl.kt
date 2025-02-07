@@ -41,7 +41,9 @@ class PokeDexRepositoryImpl(
     override suspend fun searchPokemon(query: String): Result<List<Pokemon>> {
         return runCatching {
             localDataStorage.searchPokemon(query)
-                .map { it.toDomain() }
+                .map {
+                    it.toDomain()
+                }
         }.recoverCatching { _ ->
             emptyList()
         }

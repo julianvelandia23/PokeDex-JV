@@ -1,9 +1,13 @@
 package com.julianvelandia.presentation.composable.detail
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,7 +33,6 @@ fun DetailsScreen(
     viewModel: DetailsViewModel = hiltViewModel(),
     onBack: () -> Unit = {}
 ) {
-
     val state by viewModel.detailState.collectAsState()
 
     Scaffold(
@@ -44,7 +47,7 @@ fun DetailsScreen(
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.accessibility_back)
                         )
                     }
@@ -52,29 +55,31 @@ fun DetailsScreen(
             )
         }
     ) { paddingValues ->
-        when {
-            state.isLoading -> {
-                LoadingState()
-            }
-
-            state.isError -> {
-                EmptyState()
-            }
-
-            else -> {
-                if (state.data != null) {
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .verticalScroll(rememberScrollState())
+        ) {
+            when {
+                state.isLoading -> {
+                    LoadingState()
+                }
+                state.isError -> {
+                    EmptyState()
+                }
+                state.data != null -> {
                     state.data?.let { pokemonDetail ->
                         DetailState(
-                            modifier = modifier.padding(paddingValues),
+                            modifier = Modifier.fillMaxWidth(),
                             pokemonDetail = pokemonDetail
                         )
                     }
-                } else {
+                }
+                else -> {
                     EmptyState(value = stringResource(R.string.empty_result))
                 }
             }
         }
     }
-
-
 }
